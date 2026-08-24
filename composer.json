@@ -1,0 +1,44 @@
+{
+    "name": "splatty-hq/splatty-php",
+    "description": "PHP client for Splatty. Captures exceptions and logs and ships them over the envelope protocol.",
+    "keywords": ["splatty", "error-tracking", "logging", "observability"],
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/splatty-hq/splatty-php",
+    "authors": [
+        { "name": "Alex Koval" }
+    ],
+    "require": {
+        "php": "^8.1",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-zlib": "*"
+    },
+    "require-dev": {
+        "monolog/monolog": "^3.5",
+        "nyholm/psr7": "^1.8",
+        "phpunit/phpunit": "^10.5",
+        "psr/http-server-middleware": "^1.0",
+        "psr/log": "^3.0"
+    },
+    "suggest": {
+        "monolog/monolog": "Ship Monolog output to Splatty with Splatty\\Logs\\MonologHandler",
+        "psr/log": "Use Splatty\\Logs\\PsrLogger as a PSR-3 logger",
+        "psr/http-server-middleware": "Report exceptions from PSR-15 pipelines with Splatty\\Http\\Middleware"
+    },
+    "autoload": {
+        "psr-4": { "Splatty\\": "src/" },
+        "files": ["src/functions.php"]
+    },
+    "autoload-dev": {
+        "psr-4": { "Splatty\\Tests\\": "tests/" }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
