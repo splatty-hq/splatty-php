@@ -10,6 +10,6 @@ final class Version
     public const SDK_NAME = 'splatty.php';
 
     // x-release-please-start-version
-    public const VERSION = '0.1.0';
+    public const VERSION = '0.1.1';
     // x-release-please-end
 }
