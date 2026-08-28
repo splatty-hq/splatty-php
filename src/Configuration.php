@@ -37,6 +37,9 @@ final class Configuration
     /** Send request headers verbatim instead of filtering the sensitive ones. */
     public bool $sendDefaultPii = false;
 
+    /** Source lines sent either side of a stack frame. 0 disables. */
+    public int $contextLines = 5;
+
     /** Connection setup timeout, milliseconds. */
     public int $openTimeoutMs = 5000;
 
@@ -74,6 +77,7 @@ final class Configuration
         $this->logs = (bool) ($options['logs'] ?? true);
         $this->captureUnhandled = (bool) ($options['captureUnhandled'] ?? false);
         $this->sendDefaultPii = (bool) ($options['sendDefaultPii'] ?? false);
+        $this->contextLines = (int) ($options['contextLines'] ?? 5);
         $this->openTimeoutMs = (int) ($options['openTimeoutMs'] ?? 5000);
         $this->readTimeoutMs = (int) ($options['readTimeoutMs'] ?? 10000);
         $this->projectRoot = rtrim((string) ($options['projectRoot'] ?? self::detectProjectRoot()), '/');

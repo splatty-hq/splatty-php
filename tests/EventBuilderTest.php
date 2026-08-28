@@ -39,6 +39,33 @@ final class EventBuilderTest extends TestCase
         self::assertNotEmpty($value['stacktrace']['frames']);
     }
 
+    public function testFramesCarrySourceContext(): void
+    {
+        $event = $this->builder()->fromThrowable($this->thrower());
+
+        $frames = $event['exception']['values'][0]['stacktrace']['frames'];
+        $frame = end($frames);
+
+        self::assertSame(__FILE__, $frame['abs_path']);
+        self::assertSame("        return new RuntimeException('boom');", $frame['context_line']);
+        self::assertCount(5, $frame['pre_context']);
+        self::assertCount(5, $frame['post_context']);
+        self::assertSame('    {', end($frame['pre_context']));
+    }
+
+    public function testContextLinesZeroLeavesFramesBare(): void
+    {
+        $builder = new EventBuilder($this->makeConfiguration(['contextLines' => 0]));
+
+        $frames = $builder->fromThrowable($this->thrower())['exception']['values'][0]['stacktrace']['frames'];
+
+        foreach ($frames as $frame) {
+            self::assertArrayNotHasKey('context_line', $frame);
+            self::assertArrayNotHasKey('pre_context', $frame);
+            self::assertArrayNotHasKey('post_context', $frame);
+        }
+    }
+
     public function testTimestampCarriesSubSecondPrecision(): void
     {
         $event = $this->builder()->fromMessage('x');

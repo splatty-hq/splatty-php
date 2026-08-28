@@ -75,6 +75,7 @@ entries are flushed automatically on shutdown.
 | `logs` | — | `true` | Install the batching log appender |
 | `captureUnhandled` | — | `false` | Install the uncaught-exception, error and fatal handlers |
 | `sendDefaultPii` | — | `false` | Send request headers verbatim instead of filtering them |
+| `contextLines` | — | `5` | Source lines sent either side of a stack frame; `0` disables |
 | `openTimeoutMs` | — | `5000` | Connection setup timeout |
 | `readTimeoutMs` | — | `10000` | Whole-request timeout |
 | `projectRoot` | — | detected | Shortens filenames and decides `in_app` |

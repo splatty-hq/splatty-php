@@ -16,8 +16,11 @@ final class EventBuilder
 {
     private const MAX_CHAIN_DEPTH = 32;
 
+    private LineCache $lineCache;
+
     public function __construct(private Configuration $configuration)
     {
+        $this->lineCache = new LineCache();
     }
 
     /**
@@ -154,13 +157,17 @@ final class EventBuilder
      */
     private function frame(?string $file, ?int $line, string $function): array
     {
-        return [
+        $frame = [
             'filename' => $this->shortFilename($file),
             'abs_path' => $file,
             'function' => $function,
             'lineno' => $line,
             'in_app' => $this->inApp($file),
         ];
+
+        $context = $this->lineCache->context($file, $line, $this->configuration->contextLines);
+
+        return $context === null ? $frame : array_merge($frame, $context);
     }
 
     private function shortFilename(?string $file): ?string
